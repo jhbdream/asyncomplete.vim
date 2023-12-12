@@ -496,6 +496,26 @@ function! s:strip_pair_characters(base, item) abort
             let l:item['word'] = l:str[:-2]
         endif
     endif
+
+	" 获取字典中的字符串
+	let original_string = l:item['word']
+
+	" 设置最大长度和后缀
+	let max_length = 48
+	let suffix = ' ...'
+
+	" 判断字符串长度是否超过最大长度
+	if len(original_string) > max_length
+		" 截断字符串，保留前面的字符，末尾添加后缀
+		let truncated_string = strpart(original_string, 0, max_length - len(suffix)) . suffix
+	else
+		" 字符串长度未超过最大长度，不添加后缀
+		let truncated_string = original_string
+	endif
+
+	" 更新字典中的值
+	let l:item['abbr'] = truncated_string
+
     return l:item
 endfunction
 
